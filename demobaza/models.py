@@ -3,6 +3,7 @@ from urllib.parse import urlparse, parse_qs
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.timezone import now
 from pytils.translit import slugify  # slugify() из джанги не знает кириллицы
 
 
@@ -51,7 +52,8 @@ class Project(models.Model):
     archive = models.BooleanField('архив', default=False)
     # Если не проверен, отображаем так же точно. А если проверен, можно
     # писать «проверен»
-    verified = models.DateTimeField('проверен администрацией', null=True)
+    verified = models.BooleanField('проверен администрацией', default=False)
+    verified_at = models.DateTimeField(editable=False, null=True)
     name = models.CharField('название', max_length=100, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
     short_text = models.TextField('короткий текст', blank=True)
@@ -59,6 +61,7 @@ class Project(models.Model):
     city = models.ForeignKey(
         'demobaza.City',
         null=True,
+        blank=True,
         verbose_name='город',
         on_delete=models.PROTECT,
         related_name='projects',
@@ -83,6 +86,10 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         self.name = self.name.strip()
         self.slug = slugify(self.name)
+        if self.verified and not self.verified_at:
+            self.verified_at = now()
+        elif not self.verified and self.verified_at:
+            self.verified_at = None
         super().save(*args, **kwargs)
 
 
