@@ -11,20 +11,15 @@ from .validators import validate_mp3ext
 
 
 class User(AbstractUser):
-    # Один пользователь может управлять несколькими музыкальными проектами
-    # например, играет с группой, играет сольно. А может это просто зритель,
-    # тогда у него ноль проектов.
-    #
-    # Также одним проектом могут управлять несколько пользователей. Создать
-    # новый проект может любой пользователь. Если надо доверить управление
-    # проектом ещё кому-то, это должен явно сделать тот, у кого уже есть доступ.
-    # Ролей пока не делаем, то есть все управляющие равны. Если солист Вася
-    # доверил басисту Пете управлять страницей группы «Бетонные сырники»,
-    # а басист Петя отключил солисту Васе управление (вот сволочь), то это
-    # их личные проблемы, пусть договариваются между собой сами
-    #
-    # Если проектом управляет только один человек, он не может отказаться
-    # от управления.
+    """
+    Пользователь системы. Может быть:
+    - админом
+    - представителем фестиваля (Event)
+    - представителем музыканта (Project)
+
+    А так же в любом случае любой пользователь может быть слушателем, который
+    просто ходит по сайту и слушает музыку.
+    """
     projects = models.ManyToManyField(
         'demobaza.Project',
         through='demobaza.Musician',
@@ -32,9 +27,6 @@ class User(AbstractUser):
         verbose_name='проекты',
         blank=True,
     )
-
-    # для фестивалей та же логика, что и для проектов: пользователь может
-    # быть организатором любого количества событий, от нуля.
     events = models.ManyToManyField(
         'demobaza.Event',
         through='demobaza.Organizer',
@@ -49,6 +41,28 @@ class User(AbstractUser):
 
 
 class Project(models.Model):
+    """
+    Проект (имеющий название, информацию, треки)
+
+    Один пользователь может управлять несколькими музыкальными проектами
+    (например, играет с группой, играет сольно, продюссирует ещё кого-то).
+
+    Плюс одним проектом могут управлять несколько пользователей
+    (например, все участники группы).
+
+    Создать новый проект может любой пользователь.
+
+    Если надо доверить управление проектом ещё кому-то, это должен явно
+    сделать тот, у кого уже есть доступ.
+
+    Все управляющие проектом равны. Если солист Вася доверил басисту Пете
+    управлять страницей группы «Бетонные сырники», а басист Петя отключил
+    солисту Васе управление (вот сволочь), то это их личные проблемы, пусть
+    договариваются между собой сами.
+
+    Если проектом управляет только один человек, он не может отказаться
+    от управления.
+    """
     created = models.DateTimeField('создан', auto_now_add=True)
     name = models.CharField('название', max_length=100, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
@@ -96,8 +110,10 @@ class Project(models.Model):
         super().save(*args, **kwargs)
 
 
-# не более settings.DEMOBAZA_MAX_TRACKS треков на проект
 class Track(models.Model):
+    """
+    У каждого проекта не более settings.DEMOBAZA_MAX_TRACKS треков.
+    """
     created = models.DateTimeField('создан', auto_now_add=True)
     sort_ordering = models.SmallIntegerField('порядок сортировки', default=1)
     project = models.ForeignKey(
@@ -146,8 +162,10 @@ class Track(models.Model):
         super().save(*args, **kwargs)
 
 
-# не более settings.DEMOBAZA_MAX_MOVIES треков на проект
 class Movie(models.Model):
+    """
+    У каждого проекта не более settings.DEMOBAZA_MAX_MOVIES видео
+    """
     created = models.DateTimeField('создан', auto_now_add=True)
     sort_ordering = models.SmallIntegerField('порядок сортировки')
     project = models.ForeignKey('demobaza.Project', on_delete=models.PROTECT)
@@ -195,6 +213,10 @@ class Movie(models.Model):
 
 
 class Genre(models.Model):
+    """
+    Каждый управляющий проектом может создать новый жанр. Но лучше, конечно,
+    использовать готовые.
+    """
     created = models.DateTimeField('создан', auto_now_add=True)
     name = models.CharField('название', max_length=20, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
@@ -215,9 +237,11 @@ class Genre(models.Model):
         super().save(*args, **kwargs)
 
 
-# пока не импортируем никакую общую базу, будем создавать базу городов
-# по ходу дела, по потребонсти. Возможно, городов вообще много не будет.
 class City(models.Model):
+    """
+    Пока не импортируем никакую общую базу, будем создавать базу городов
+    по ходу дела, по потребонсти
+    """
     created = models.DateTimeField('создан', auto_now_add=True)
     name = models.CharField('название', max_length=50, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
@@ -239,6 +263,9 @@ class City(models.Model):
 
 
 class Event(models.Model):
+    """
+    События. Логика управления такая же, как и у проектов (Project), см. выше
+    """
     name = models.CharField('название', max_length=50, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
     short_text = models.TextField('короткий текст', blank=True)
@@ -267,7 +294,7 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
 
-# явные задаём модели для связей
+# задаём явные модели для связей
 
 class Organizer(models.Model):
     created = models.DateTimeField('добавлен', auto_now_add=True)
