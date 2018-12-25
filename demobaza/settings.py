@@ -78,3 +78,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'demobaza.User'
+
+DEMOBAZA_MAX_TRACKS = 3
+DEMOBAZA_MAX_MOVIES = 3

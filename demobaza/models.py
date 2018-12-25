@@ -1,4 +1,7 @@
+from urllib.parse import urlparse, parse_qs
+
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 from pytils.translit import slugify  # slugify() из джанги не знает кириллицы
 
@@ -83,6 +86,7 @@ class Project(models.Model):
         super().save(*args, **kwargs)
 
 
+# не более settings.DEMOBAZA_MAX_TRACKS треков на проект
 class Track(models.Model):
     created = models.DateTimeField('создан', auto_now_add=True)
     sort_ordering = models.SmallIntegerField('порядок сортировки')
@@ -109,6 +113,53 @@ class Track(models.Model):
         # FIXME: при загрузке файла заполнять поле duration_sec и название трека
         # название можно редактировать (допустим, в mp3 название не указано
         # или указано криво), а время редактировать нельзя
+        super().save(*args, **kwargs)
+
+
+# не более settings.DEMOBAZA_MAX_MOVIES треков на проект
+class Movie(models.Model):
+    created = models.DateTimeField('создан', auto_now_add=True)
+    sort_ordering = models.SmallIntegerField('порядок сортировки')
+    project = models.ForeignKey('demobaza.Project', on_delete=models.PROTECT)
+    title = models.CharField('название', max_length=100, unique=True)
+    youtube_url = models.URLField('адрес ролика на YouTube')
+    youtube_id = models.CharField(max_length=40, editable=False)
+
+    class Meta:
+        verbose_name = 'трек'
+        verbose_name_plural = 'треки'
+        ordering = (
+            'sort_ordering',
+        )
+
+    def __str__(self):
+        return '{} - {}'.format(
+            self.title,
+            self.project.name,
+        )
+
+    def clean(self):
+        try:
+            o = urlparse(self.youtube_url)
+        except ValueError as e:
+            raise ValidationError('Некорректный адрес ролика')
+
+        if o.netloc not in (
+            'www.youtube.com',
+            'm.youtube.com',
+            'youtube.com',
+        ):
+            raise ValidationError('Некорректный адрес ролика')
+
+        params = parse_qs(o.query)
+        if 'v' not in params:
+            raise ValidationError('Некорректный адрес ролика')
+
+        self.youtube_id = params['v'][0]
+
+    def save(self, *args, **kwargs):
+        self.title = self.title.strip()
+        self.clean()
         super().save(*args, **kwargs)
 
 
