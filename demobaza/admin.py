@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 
 from . import models
 
@@ -25,3 +27,8 @@ class ProjectAdmin(admin.ModelAdmin):
         TrackAdmin,
         MovieAdmin,
     )
+
+
+@admin.register(models.User)
+class UserAdmin(BaseUserAdmin):
+    pass
