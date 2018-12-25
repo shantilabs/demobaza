@@ -18,10 +18,19 @@ class User(AbstractUser):
     #
     # Если проектом управляет только один человек, он не может отказаться
     # от управления.
-    #
-    # Если группу
-    musicians = models.ManyToManyField(
-        'demobaza.Musician',
+    projects = models.ManyToManyField(
+        'demobaza.Project',
+        through='demobaza.Musician',
+        related_name='users',
+        verbose_name='музыканты',
+        blank=True,
+    )
+
+    # для фестивалей та же логика, что и для проектов: пользователь может
+    # быть организатором любого количества событий, от нуля. Но тут
+    events = models.ManyToManyField(
+        'demobaza.Event',
+        through='demobaza.Organizer',
         related_name='users',
         verbose_name='музыканты',
         blank=True,
@@ -32,7 +41,7 @@ class User(AbstractUser):
         verbose_name_plural = 'пользователи'
 
 
-class Musician(models.Model):
+class Project(models.Model):
     created = models.DateTimeField('создан', auto_now_add=True)
     # Архивных не показываем в списках, но показываем по прямой ссылке.
     # должна быть плашка «архив». Треки у архивных не отображаются, только текст
@@ -49,13 +58,13 @@ class Musician(models.Model):
         null=True,
         verbose_name='город',
         on_delete=models.PROTECT,
-        related_name='musicians',
+        related_name='projects',
     )
     genres = models.ManyToManyField(
         'demobaza.Genre',
         blank=True,
         verbose_name='жанры',
-        related_name='musicians',
+        related_name='projects',
     )
 
     class Meta:
@@ -116,7 +125,7 @@ class City(models.Model):
         super().save(*args, **kwargs)
 
 
-class Festival(models.Model):
+class Event(models.Model):
     name = models.CharField('название', max_length=50, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
     short_text = models.TextField('короткий текст', blank=True)
@@ -126,12 +135,12 @@ class Festival(models.Model):
         null=True,
         verbose_name='город',
         on_delete=models.PROTECT,
-        related_name='festivals',
+        related_name='events',
     )
 
     class Meta:
-        verbose_name = 'фестиваль'
-        verbose_name_plural = 'фестивали'
+        verbose_name = 'событие'
+        verbose_name_plural = 'события'
         ordering = (
             'name',
         )
@@ -143,3 +152,17 @@ class Festival(models.Model):
         self.name = self.name.strip()
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+
+# явные задаём модели для связей
+
+class Organizer(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey('demobaza.User', on_delete=models.PROTECT)
+    event = models.ForeignKey('demobaza.Event', on_delete=models.PROTECT)
+
+
+class Musician(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey('demobaza.User', on_delete=models.PROTECT)
+    project = models.ForeignKey('demobaza.Project', on_delete=models.PROTECT)
