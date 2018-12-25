@@ -1,3 +1,4 @@
+import os.path
 from urllib.parse import urlparse, parse_qs
 
 from django.contrib.auth.models import AbstractUser
@@ -5,6 +6,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.timezone import now
 from pytils.translit import slugify  # slugify() из джанги не знает кириллицы
+
+from .validators import validate_mp3ext
 
 
 class User(AbstractUser):
@@ -47,13 +50,6 @@ class User(AbstractUser):
 
 class Project(models.Model):
     created = models.DateTimeField('создан', auto_now_add=True)
-    # Архивных не показываем в списках, но показываем по прямой ссылке.
-    # должна быть плашка «архив». Треки у архивных не отображаются, только текст
-    archive = models.BooleanField('архив', default=False)
-    # Если не проверен, отображаем так же точно. А если проверен, можно
-    # писать «проверен»
-    verified = models.BooleanField('проверен администрацией', default=False)
-    verified_at = models.DateTimeField(editable=False, null=True)
     name = models.CharField('название', max_length=100, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
     short_text = models.TextField('короткий текст', blank=True)
@@ -72,6 +68,13 @@ class Project(models.Model):
         verbose_name='жанры',
         related_name='projects',
     )
+    # Архивных не показываем в списках, но показываем по прямой ссылке.
+    # должна быть плашка «архив». Треки у архивных не отображаются, только текст
+    archive = models.BooleanField('архив', default=False)
+    # Если не проверен, отображаем так же точно. А если проверен, можно
+    # писать «проверен»
+    verified = models.BooleanField('проверен администрацией', default=False)
+    verified_at = models.DateTimeField(editable=False, null=True)
 
     class Meta:
         verbose_name = 'музыкант'
@@ -96,17 +99,31 @@ class Project(models.Model):
 # не более settings.DEMOBAZA_MAX_TRACKS треков на проект
 class Track(models.Model):
     created = models.DateTimeField('создан', auto_now_add=True)
-    sort_ordering = models.SmallIntegerField('порядок сортировки')
+    sort_ordering = models.SmallIntegerField('порядок сортировки', default=1)
     project = models.ForeignKey('demobaza.Project', on_delete=models.PROTECT)
-    title = models.CharField('название', max_length=100, unique=True)
-    duration_sec = models.PositiveIntegerField('длина, сек.', editable=False)
-    file = models.FileField('.mp3', upload_to='tracks')
+    title = models.CharField(
+        'название',
+        max_length=100,
+        unique=True,
+        blank=True,
+    )
+    duration_sec = models.PositiveIntegerField(
+        'длина, сек.',
+        editable=False,
+        default=0,
+    )
+    file = models.FileField(
+        '.mp3',
+        upload_to='tracks',
+        validators=[validate_mp3ext],
+    )
 
     class Meta:
         verbose_name = 'трек'
         verbose_name_plural = 'треки'
         ordering = (
             'sort_ordering',
+            'title',
         )
 
     def __str__(self):
@@ -117,6 +134,8 @@ class Track(models.Model):
 
     def save(self, *args, **kwargs):
         self.title = self.title.strip()
+        if not self.title:
+            self.title = os.path.split(self.file.name)[-1]
         # FIXME: при загрузке файла заполнять поле duration_sec и название трека
         # название можно редактировать (допустим, в mp3 название не указано
         # или указано криво), а время редактировать нельзя
@@ -133,10 +152,11 @@ class Movie(models.Model):
     youtube_id = models.CharField(max_length=40, editable=False)
 
     class Meta:
-        verbose_name = 'трек'
-        verbose_name_plural = 'треки'
+        verbose_name = 'видео'
+        verbose_name_plural = 'видео'
         ordering = (
             'sort_ordering',
+            'title',
         )
 
     def __str__(self):
