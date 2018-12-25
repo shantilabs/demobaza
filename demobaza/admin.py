@@ -20,6 +20,21 @@ class MovieAdmin(admin.TabularInline):
 
 @admin.register(models.Project)
 class ProjectAdmin(admin.ModelAdmin):
+    search_fields = (
+        'name',
+    )
+    list_display = (
+        'name',
+        'city',
+        'verified',
+        'is_active',
+    )
+    list_filter = (
+        'verified',
+        'is_active',
+        'city',
+        'genres',
+    )
     filter_horizontal = (
         'genres',
     )
@@ -29,6 +44,31 @@ class ProjectAdmin(admin.ModelAdmin):
     )
 
 
+class OrganizerAdmin(admin.TabularInline):
+    model = models.Organizer
+    raw_id_fields = (
+        'event',
+    )
+    readonly_fields = (
+        'created',
+    )
+    extra = 0
+
+
+class MusicianAdmin(admin.TabularInline):
+    model = models.Musician
+    raw_id_fields = (
+        'project',
+    )
+    readonly_fields = (
+        'created',
+    )
+    extra = 0
+
+
 @admin.register(models.User)
 class UserAdmin(BaseUserAdmin):
-    pass
+    inlines = BaseUserAdmin.inlines + [
+        OrganizerAdmin,
+        MusicianAdmin,
+    ]

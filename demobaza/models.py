@@ -29,7 +29,7 @@ class User(AbstractUser):
         'demobaza.Project',
         through='demobaza.Musician',
         related_name='users',
-        verbose_name='музыканты',
+        verbose_name='проекты',
         blank=True,
     )
 
@@ -39,7 +39,7 @@ class User(AbstractUser):
         'demobaza.Event',
         through='demobaza.Organizer',
         related_name='users',
-        verbose_name='музыканты',
+        verbose_name='события',
         blank=True,
     )
 
@@ -70,15 +70,15 @@ class Project(models.Model):
     )
     # Архивных не показываем в списках, но показываем по прямой ссылке.
     # должна быть плашка «архив». Треки у архивных не отображаются, только текст
-    archive = models.BooleanField('архив', default=False)
+    is_active = models.BooleanField('активен', default=True)
     # Если не проверен, отображаем так же точно. А если проверен, можно
     # писать «проверен»
     verified = models.BooleanField('проверен администрацией', default=False)
     verified_at = models.DateTimeField(editable=False, null=True)
 
     class Meta:
-        verbose_name = 'музыкант'
-        verbose_name_plural = 'музыканты'
+        verbose_name = 'проект (группа, исполнитель)'
+        verbose_name_plural = 'проекты (группы, исполнители)'
         ordering = (
             'name',
         )
@@ -100,7 +100,11 @@ class Project(models.Model):
 class Track(models.Model):
     created = models.DateTimeField('создан', auto_now_add=True)
     sort_ordering = models.SmallIntegerField('порядок сортировки', default=1)
-    project = models.ForeignKey('demobaza.Project', on_delete=models.PROTECT)
+    project = models.ForeignKey(
+        'demobaza.Project',
+        on_delete=models.PROTECT,
+        editable=False,
+    )
     title = models.CharField(
         'название',
         max_length=100,
@@ -248,8 +252,8 @@ class Event(models.Model):
     )
 
     class Meta:
-        verbose_name = 'событие'
-        verbose_name_plural = 'события'
+        verbose_name = 'событие (фестиваль, концерт, квартирник)'
+        verbose_name_plural = 'события (фестивали, концерты, квартирники)'
         ordering = (
             'name',
         )
@@ -266,12 +270,34 @@ class Event(models.Model):
 # явные задаём модели для связей
 
 class Organizer(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField('добавлен', auto_now_add=True)
     user = models.ForeignKey('demobaza.User', on_delete=models.PROTECT)
-    event = models.ForeignKey('demobaza.Event', on_delete=models.PROTECT)
+    event = models.ForeignKey(
+        'demobaza.Event',
+        on_delete=models.PROTECT,
+        verbose_name='событие',
+    )
+
+    class Meta:
+        verbose_name = 'организатор'
+        verbose_name_plural = 'организаторы'
+        unique_together = (
+            ('user', 'event'),
+        )
 
 
 class Musician(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField('добавлен', auto_now_add=True)
     user = models.ForeignKey('demobaza.User', on_delete=models.PROTECT)
-    project = models.ForeignKey('demobaza.Project', on_delete=models.PROTECT)
+    project = models.ForeignKey(
+        'demobaza.Project',
+        on_delete=models.PROTECT,
+        verbose_name='проект',
+    )
+
+    class Meta:
+        verbose_name = 'музыкант'
+        verbose_name_plural = 'музыканты'
+        unique_together = (
+            ('user', 'project'),
+        )
