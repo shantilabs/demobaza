@@ -27,7 +27,7 @@ class User(AbstractUser):
     )
 
     # для фестивалей та же логика, что и для проектов: пользователь может
-    # быть организатором любого количества событий, от нуля. Но тут
+    # быть организатором любого количества событий, от нуля.
     events = models.ManyToManyField(
         'demobaza.Event',
         through='demobaza.Organizer',
@@ -83,7 +83,37 @@ class Project(models.Model):
         super().save(*args, **kwargs)
 
 
+class Track(models.Model):
+    created = models.DateTimeField('создан', auto_now_add=True)
+    sort_ordering = models.SmallIntegerField('порядок сортировки')
+    project = models.ForeignKey('demobaza.Project', on_delete=models.PROTECT)
+    title = models.CharField('название', max_length=100, unique=True)
+    duration_sec = models.PositiveIntegerField('длина, сек.', editable=False)
+    file = models.FileField('.mp3', upload_to='tracks')
+
+    class Meta:
+        verbose_name = 'трек'
+        verbose_name_plural = 'треки'
+        ordering = (
+            'sort_ordering',
+        )
+
+    def __str__(self):
+        return '{} - {}'.format(
+            self.title,
+            self.project.name,
+        )
+
+    def save(self, *args, **kwargs):
+        self.title = self.title.strip()
+        # FIXME: при загрузке файла заполнять поле duration_sec и название трека
+        # название можно редактировать (допустим, в mp3 название не указано
+        # или указано криво), а время редактировать нельзя
+        super().save(*args, **kwargs)
+
+
 class Genre(models.Model):
+    created = models.DateTimeField('создан', auto_now_add=True)
     name = models.CharField('название', max_length=20, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
 
@@ -106,6 +136,7 @@ class Genre(models.Model):
 # пока не импортируем никакую общую базу, будем создавать базу городов
 # по ходу дела, по потребонсти. Возможно, городов вообще много не будет.
 class City(models.Model):
+    created = models.DateTimeField('создан', auto_now_add=True)
     name = models.CharField('название', max_length=50, unique=True)
     slug = models.SlugField(editable=False, unique=True, db_index=True)
 
