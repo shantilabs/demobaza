@@ -84,7 +84,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.idea/
+.idea/workspace.xml
 .env
 .venv
 env/
