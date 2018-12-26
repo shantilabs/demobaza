@@ -1,18 +1,10 @@
-<!DOCTYPE html>{% load static %}
-<html lang="ru">
+{% extends "base.html" %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Демобаза</title>
-    <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
+{% block title %}Демобаза{% endblock %}
 
-<body>
-    <!-- Preloader -->
+{% block body %}
+
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="lds-ellipsis">
             <div></div>
@@ -235,10 +227,4 @@ Copyright &copy;2019 All rights reserved | This template is made with <i class="
         </div>
     </footer>
 
-    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/plugins/plugins.js' %}"></script>
-    <script src="{% static 'js/active.js' %}"></script>
-
-</body>
+{% endblock %}
