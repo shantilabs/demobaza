@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14820848-0194-450b-bece-b14a77dc873e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/demobaza/templates/demobaza/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demobaza/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/demobaza/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demobaza/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/demobaza/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demobaza/templates/home.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demobaza/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/demobaza/validators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demobaza/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/demobaza/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,20 +26,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/demobaza/fixtures/filipp.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-86">
+            <state relative-caret-position="211">
               <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/demobaza/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="74" column="18" lean-forward="true" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
+            <state relative-caret-position="15">
+              <caret line="84" column="31" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -99,12 +94,12 @@
         <option value="$PROJECT_DIR$/demobaza/settings.py" />
         <option value="$PROJECT_DIR$/demobaza/templates/home.html" />
         <option value="$PROJECT_DIR$/demobaza/validators.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/workshop.py" />
         <option value="$PROJECT_DIR$/demobaza/views.py" />
-        <option value="$PROJECT_DIR$/demobaza/models.py" />
         <option value="$PROJECT_DIR$/demobaza/templates/demobaza/home.html" />
         <option value="$PROJECT_DIR$/demobaza/fixtures/filipp.json" />
+        <option value="$PROJECT_DIR$/demobaza/models.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -372,13 +367,6 @@
     <entry file="file://$PROJECT_DIR$/demobaza/static/img/bg-img/a1.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/workshop.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -410,20 +398,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demobaza/models.py">
+    <entry file="file://$PROJECT_DIR$/demobaza/fixtures/filipp.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="74" column="18" lean-forward="true" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="211">
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demobaza/fixtures/filipp.json">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-86">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+        <state relative-caret-position="272">
+          <caret line="86" column="6" selection-start-line="86" selection-start-column="6" selection-end-line="86" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demobaza/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="84" column="31" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
