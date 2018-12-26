@@ -7,7 +7,7 @@ from django.db import models
 from django.utils.timezone import now
 from pytils.translit import slugify  # slugify() из джанги не знает кириллицы
 
-from .validators import validate_mp3ext, validate_jpgext
+from .validators import validate_mp3ext
 
 
 class User(AbstractUser):
@@ -82,7 +82,7 @@ class Project(models.Model):
         'demobaza.Genre',
         blank=True,
         verbose_name='жанры',
-        related_name='projects'
+        related_name='projects',
     )
     # Архивных не показываем в списках, но показываем по прямой ссылке.
     # должна быть плашка «архив». Треки у архивных не отображаются, только текст
