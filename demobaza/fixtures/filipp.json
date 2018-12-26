@@ -1,0 +1,79 @@
+
+
+[
+  {
+    "model": "demobaza.City",
+    "pk": 1,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Сыктывкар",
+      "slug": "сыктык"
+    }
+  },
+
+  {
+    "model": "demobaza.City",
+    "pk": 2,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Челябинск",
+      "slug": "челяб"
+    }
+  },
+
+  {
+    "model": "demobaza.Genre",
+    "pk": 1,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Попса",
+      "slug": "pop"
+    }
+  },
+
+
+  {
+    "model": "demobaza.Project",
+    "pk": 3,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Брат Бедросыча",
+      "slug": "kirkor",
+      "short_text": "Бедросыч такой бедросыч",
+      "long_text": "Он любит перья и носки",
+      "city": "1",
+      "genres": "1",
+      "userpic": "kirkor.jpg"
+    }
+  },
+
+  {
+    "model": "demobaza.Project",
+    "pk": 1,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Ышо один Беросыч",
+      "slug": "filip",
+      "short_text": "Бедросыч такой бедросыч",
+      "long_text": "Он любит перья и носки",
+      "city": "2",
+      "genres": "1",
+      "userpic": "filipp.jpg"
+    }
+  },
+
+  {
+    "model": "demobaza.Project",
+    "pk": 2,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Бедросыч02",
+      "slug": "fil",
+      "short_text": "Бедросыч такой бедросыч",
+      "long_text": "Он любит перья и носки",
+      "city": "1",
+      "genres": "1",
+      "userpic": "kirkor.jpg"
+    }
+  }
+]
