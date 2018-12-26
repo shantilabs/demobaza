@@ -68,6 +68,8 @@ class Project(models.Model):
     slug = models.SlugField(editable=False, unique=True, db_index=True)
     short_text = models.TextField('короткий текст', blank=True)
     long_text = models.TextField('длинный текст', blank=True)
+    userpic = models.TextField(default='filipp.jpg', blank=False
+    )
     city = models.ForeignKey(
         'demobaza.City',
         null=True,
