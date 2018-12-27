@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ musician.name }} {% endblock %}
+
+{% block body %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'stub/metallica.jpg' %});">
+        <div class="bradcumbContent">
+            <p> {{ musician.city }}
+
+            </p>
+            <h2>{{ musician.name }}</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+<!-- ##### Featured Artist Area Start ##### -->
+    <section class="featured-artist-area section-padding-100 bg-fixed">
+        <div class="container">
+            <div class="row align-items-end">
+                <div class="col-12 col-md-5 col-lg-4">
+                    <div class="featured-artist-thumb">
+                        <img src="{% static 'stub/filipp.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-12 col-md-7 col-lg-8">
+                    <div class="featured-artist-content">
+                        <!-- Section Heading -->
+                        <div class="section-heading black text-left mb-30">
+
+                            <h2>{% for genre in musician.genres.all %}
+                                {{ genre }}
+                                {% endfor %}
+                            </h2>
+                            <h6>{{ musician.long_text }}</h6>
+                        </div>
+
+                        <div class="song-play-area">
+                            <div class="song-name">
+                                <p>01. Main Hit Song</p>
+                            </div>
+                            <audio preload="auto" controls>
+                                <source src="audio/dummy-audio.mp3">
+                            </audio>
+                        </div>
+                        <div class="song-play-area">
+                            <div class="song-name">
+                                <p>01. Main Hit Song</p>
+                            </div>
+                            <audio preload="auto" controls>
+                                <source src="audio/dummy-audio.mp3">
+                            </audio>
+                        </div>
+                        <div class="song-play-area">
+                            <div class="song-name">
+                                <p>01. Main Hit Song</p>
+                            </div>
+                            <audio preload="auto" controls>
+                                <source src="audio/dummy-audio.mp3">
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Featured Artist Area End ##### -->
+
+{% endblock %}

@@ -107,4 +107,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-workshop.py
+migrations/

@@ -23,4 +23,5 @@ if settings.DEBUG:
 urlpatterns += [
     path('', views.home),
     path('admin/', admin.site.urls),
+    path('musicians/<str:slug>/', views.musician)
 ]

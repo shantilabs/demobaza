@@ -21,16 +21,6 @@
     }
   },
 
-  {
-    "model": "demobaza.Genre",
-    "pk": 1,
-    "fields": {
-      "created": "2018-07-29 09:17:13.812189",
-      "name": "Попса",
-      "slug": "pop"
-    }
-  },
-
 
   {
     "model": "demobaza.Project",
@@ -64,16 +54,43 @@
 
   {
     "model": "demobaza.Project",
-    "pk": 2,
+    "pk": 4,
     "fields": {
       "created": "2018-07-29 09:17:13.812189",
-      "name": "Бедросыч02",
-      "slug": "fil",
-      "short_text": "Бедросыч такой бедросыч",
-      "long_text": "Он любит перья и носки",
+      "name": "Бетонные кеды",
+      "slug": "беткед",
+      "short_text": "Голова - бетон - трава",
+      "long_text": "Голова! Бетон! Трава! Сосиски!",
       "city": "1",
-      "genres": "1",
-      "userpic": "kirkor.jpg"
+      "genres": "5"
+    }
+  },
+
+  {
+    "model": "demobaza.Project",
+    "pk": 5,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Металлика",
+      "slug": "метка",
+      "short_text": "Уууу, насин оф метерс!",
+      "long_text": "Уууу, ээээнтер нааайт, неве-невелэнд!",
+      "city": "2",
+      "genres": "7"
+    }
+  },
+
+  {
+    "model": "demobaza.Project",
+    "pk": 6,
+    "fields": {
+      "created": "2018-07-29 09:17:13.812189",
+      "name": "Вафельный стаканчик",
+      "slug": "вафстак",
+      "short_text": "Мальчик с пальчик - вафельный стаканчик",
+      "long_text": "Мальчик с пальчик - вафельный стаканчик",
+      "city": "2",
+      "genres": "2"
     }
   }
 ]
