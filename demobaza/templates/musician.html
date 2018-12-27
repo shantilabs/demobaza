@@ -36,31 +36,17 @@
                             </h2>
                             <h6>{{ musician.long_text }}</h6>
                         </div>
+                    {% for music in musics %}
+                        <div class="song-play-area">
+                            <div class="song-name">
+                                <p>{{ music.title }}</p>
+                            </div>
+                            <audio preload="auto" controls>
+                                <source src="{{ music.file.url }}.mp3">
+                            </audio>
+                        </div>
+                     {% endfor %}
 
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Main Hit Song</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/dummy-audio.mp3">
-                            </audio>
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Main Hit Song</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/dummy-audio.mp3">
-                            </audio>
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Main Hit Song</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/dummy-audio.mp3">
-                            </audio>
-                        </div>
                     </div>
                 </div>
             </div>

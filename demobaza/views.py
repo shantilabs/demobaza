@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Project
+from .models import Project, Track
 
 
 def home(request):
@@ -10,5 +10,7 @@ def home(request):
 
 
 def musician(request, slug):
-    return render(request, 'musician.html', {'musician': Project.objects.filter(slug=slug).first()})
+    project = Project.objects.filter(slug=slug).first()
+    music = Track.objects.filter(project=project.pk)
+    return render(request, 'musician.html', {'musician': project, 'musics': music})
 
