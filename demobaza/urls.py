@@ -24,4 +24,5 @@ urlpatterns += [
     path('', views.home),
     path('admin/', admin.site.urls),
     path('musicians/<str:slug>/', views.musician)
+    url('', include('social_django.urls', namespace='social'))
 ]
