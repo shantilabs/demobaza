@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.timezone import now
 from pytils.translit import slugify  # slugify() из джанги не знает кириллицы
 
+from mutagen.mp3 import MP3
 from .validators import validate_mp3ext
 
 
@@ -119,7 +120,7 @@ class Track(models.Model):
     project = models.ForeignKey(
         'demobaza.Project',
         on_delete=models.PROTECT,
-        editable=False,
+        # editable=False, с этой штукой нельзя добавлять треки вручную через админку
     )
     title = models.CharField(
         'название',
@@ -155,10 +156,8 @@ class Track(models.Model):
     def save(self, *args, **kwargs):
         self.title = self.title.strip()
         if not self.title:
-            self.title = os.path.split(self.file.name)[-1]
-        # FIXME: при загрузке файла заполнять поле duration_sec и название трека
-        # название можно редактировать (допустим, в mp3 название не указано
-        # или указано криво), а время редактировать нельзя
+            self.title = (os.path.split(self.file.name)[-1]).replace('.mp3', '')  # так красивей)))
+        self.duration_sec = MP3(self.file).info.length
         super().save(*args, **kwargs)
 
 

@@ -74,7 +74,23 @@ class UserAdmin(BaseUserAdmin):
     ]
 
 
-admin.site.register(models.Track)
+@admin.register(models.Track)
+class TrackFileAdmin(admin.ModelAdmin):
+    search_fields = (
+        'title',
+    )
+    list_display = (
+        'title',
+        'project',
+        'duration_sec',
+
+    )
+    list_filter = (
+        'project',
+
+    )
+
+
 admin.site.register(models.Genre)
 admin.site.register(models.Event)
 admin.site.register(models.Movie)
