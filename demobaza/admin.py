@@ -72,3 +72,11 @@ class UserAdmin(BaseUserAdmin):
         OrganizerAdmin,
         MusicianAdmin,
     ]
+
+
+admin.site.register(models.Track)
+admin.site.register(models.Genre)
+admin.site.register(models.Event)
+admin.site.register(models.Movie)
+admin.site.register(models.City)
+admin.site.register(models.Organizer)
