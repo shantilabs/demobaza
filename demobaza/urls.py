@@ -1,6 +1,7 @@
 import os
 
 from django.conf import settings
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path, re_path
 
@@ -23,6 +24,6 @@ if settings.DEBUG:
 urlpatterns += [
     path('', views.home),
     path('admin/', admin.site.urls),
-    path('musicians/<str:slug>/', views.musician)
+    path('musicians/<str:slug>/', views.musician),
     url('', include('social_django.urls', namespace='social'))
 ]
