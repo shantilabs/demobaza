@@ -5,10 +5,13 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.timezone import now
+from django.core.files import File
+
 from pytils.translit import slugify  # slugify() из джанги не знает кириллицы
 
 from mutagen.mp3 import MP3
 from .validators import validate_mp3ext
+import urllib
 
 
 class User(AbstractUser):
@@ -209,6 +212,27 @@ class Movie(models.Model):
         self.title = self.title.strip()
         self.clean()
         super().save(*args, **kwargs)
+
+
+class Avatar(models.Model):
+    """
+    Так как аватарки будут одинаковые для всех групп ползователей, думаю,
+    правильно их хранить в одной папке и обрабатывать одинаково.
+    """
+
+    url = models.CharField(max_length=255, unique=True, blank=True)
+    photo = models.ImageField(upload_to='avatars', blank=True)
+
+    def cache(self):
+        """Store image locally if we have a URL"""
+
+        if self.url and not self.photo:
+            result = urllib.urlretrieve(self.url)
+            self.photo.save(
+                    os.path.basename(self.url),
+                    File(open(result[0], 'rb'))
+                    )
+            self.save()
 
 
 class Genre(models.Model):

@@ -90,35 +90,5 @@
       "city": "2",
       "genres": "2"
     }
-  },
-    {
-    "model": "demobaza.Track",
-    "pk": 1,
-    "fields": {
-      "created": "2018-07-29 09:17:13.812189",
-      "title": "Первая хорошая песенка",
-      "file": "test1",
-      "project": "4"
-    }
-  },
-      {
-    "model": "demobaza.Track",
-    "pk": 2,
-    "fields": {
-      "created": "2018-07-29 09:17:13.812189",
-      "title": "Вторая хорошая песенка",
-      "file": "test2",
-      "project": "4"
-    }
-  },
-      {
-    "model": "demobaza.Track",
-    "pk": 3,
-    "fields": {
-      "created": "2018-07-29 09:17:13.812189",
-      "title": "Третья хорошая песенка",
-      "file": "test3",
-      "project": "4"
-    }
   }
 ]
