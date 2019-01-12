@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect, render
+from django.shortcuts import render_to_response, redirect, render, get_object_or_404
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.template.context import RequestContext
@@ -13,7 +13,7 @@ def home(request):
 
 
 def musician(request, slug):
-    project = Project.objects.filter(slug=slug).first()
+    project = get_object_or_404(Project, slug__iexact=slug)
     music = Track.objects.filter(project=project.pk)
     return render(request, 'musician.html', {'musician': project, 'musics': music})
 

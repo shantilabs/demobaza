@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!7ym2x4p+nt+n=s#%o^cdz_-=ufq*s6l@xgt%(9soqfnsce%l0'
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,8 +59,12 @@ WSGI_APPLICATION = 'demobaza.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'demobaza',
+        'USER': 'demobaza',
+        'PASSWORD': 'demobaza',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

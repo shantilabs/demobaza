@@ -24,7 +24,7 @@
 
   {
     "model": "demobaza.Project",
-    "pk": 3,
+    "pk": 1,
     "fields": {
       "created": "2018-07-29 09:17:13.812189",
       "name": "Брат Бедросыча",
@@ -38,7 +38,7 @@
 
   {
     "model": "demobaza.Project",
-    "pk": 1,
+    "pk": 2,
     "fields": {
       "created": "2018-07-29 09:17:13.812189",
       "name": "Ышо один Беросыч",
@@ -52,7 +52,7 @@
 
   {
     "model": "demobaza.Project",
-    "pk": 4,
+    "pk": 3,
     "fields": {
       "created": "2018-07-29 09:17:13.812189",
       "name": "Бетонные кеды",
@@ -66,7 +66,7 @@
 
   {
     "model": "demobaza.Project",
-    "pk": 5,
+    "pk": 4,
     "fields": {
       "created": "2018-07-29 09:17:13.812189",
       "name": "Металлика",
@@ -80,7 +80,7 @@
 
   {
     "model": "demobaza.Project",
-    "pk": 6,
+    "pk": 5,
     "fields": {
       "created": "2018-07-29 09:17:13.812189",
       "name": "Вафельный стаканчик",
